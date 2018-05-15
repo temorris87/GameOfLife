@@ -37,3 +37,6 @@ class GUIGameBoard(game_board.GameBoard):
 #                                                 col * BOX_WIDTH,
 #                                                 BOX_WIDTH,
 #                                                 BOX_WIDTH])
+
+#    def get_background_color(self):
+#       return self.background_color
