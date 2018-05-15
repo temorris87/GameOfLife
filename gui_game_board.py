@@ -1,5 +1,6 @@
 import game_board
 
+
 class GUIGameBoard(game_board.GameBoard):
     """
     Extends game_board.GameBoard to contain additional state for screen and
