@@ -1,51 +1,81 @@
-# Import a library of functions called 'pygame'
-import pygame
+class GameBoard(object):
+    """
+    Hold the state for a game board for use in any general tiled game.
+    A game board is defined as having the following numbering system:
 
-BACKGROUND_COLOR = (0, 0, 0)
-BOX_COLOR = (255, 255, 255)
+        ---------------------
+        | 0 | 1 | 2 | 3 | 4 |
+        ---------------------
+        | 5 | 6 | 7 | 8 | 9 |
+        ---------------------
+        | . | . | . | . | . |
+        ---------------------
 
-BOARD_WIDTH = 500
-BOARD_HEIGHT = 400
-BOX_WIDTH = 10
-BOXES_IN_ROW = BOARD_WIDTH // BOX_WIDTH
-BOXES_IN_COL = BOARD_HEIGHT // BOX_WIDTH
-NUM_BOXES = BOXES_IN_ROW * BOXES_IN_COL
+    The key attributes that make up the size of a game board are its width,
+    height, and box_width, which all must be passed in upon initialization.
+    Support for drawing both color filled rectangles and images exist. The
+    screen that the board is to be drawn upon must also be passed in upon
+    initialization.
 
+    Initial board state should be a single string where str[i] is the ith box
+    in the game board. Example for the above could be "**********".
+    """
 
-def draw_game_board(boxes, screen):
-    for i in boxes:
-        row = i % BOXES_IN_ROW
-        col = i // BOXES_IN_ROW
-        pygame.draw.rect(screen, BOX_COLOR, [row * BOX_WIDTH,
-                                             col * BOX_WIDTH,
-                                             BOX_WIDTH,
-                                             BOX_WIDTH])
+    def __init__(self,
+                 init_board_state,
+                 board_width=20,
+                 board_height=10):
+        self.board_state = init_board_state
+        self.board_width = board_width
+        self.board_height = board_height
 
+    def get_board_height(self):
+        '''
+        Get and return the height of the board.
+        :return: The height of the board.
+        '''
+        return self.board_height
 
-def animation(screen):
-    done = False
-    clock = pygame.time.Clock()
+    def get_board_width(self):
+        '''
+        Get and return the width of the board.
+        :return: The width of the board.
+        '''
+        return self.board_width
 
-    while not done:
-        clock.tick(10)
+    def get_relative_location(self, pos, x_pos, y_pos):
+        pass
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True
+    def get_location_up(self, pos):
+        pass
 
-        screen.fill(BACKGROUND_COLOR)
-        draw_game_board([1, 5, 8, 52, 200], screen)
-        pygame.display.flip()
+    def get_location_up_left(self, pos):
+        pass
 
+    def get_location_left(self, pos):
+        pass
 
-def main():
-    pygame.init()
-    size = [BOARD_WIDTH, BOARD_HEIGHT]
-    screen = pygame.display.set_mode(size)
-    pygame.display.set_caption("Game of Life")
-    animation(screen)
-    pygame.quit()
+    def get_location_down_left(self, pos):
+        pass
 
+    def get_location_down(self, pos):
+        pass
 
-if __name__ == "__main__":
-    main()
+    def get_location_down_right(self, pos):
+        pass
+
+    def get_location_right(self, pos):
+        pass
+
+    def get_location_up_right(self, pos):
+        pass
+
+    def update_board(self, box_rep, pos):
+        """
+        Update the board to contain a character 'box_rep' at position pos.
+        :param box_rep: The tile to be replaced, example: '*'
+        :param pos: The position in the mapping above to be replaced.
+        :return: void
+        """
+        pass
+
