@@ -177,4 +177,8 @@ class GameBoard(object):
         :param pos: The position in the mapping above to be replaced.
         :return: void
         """
-        pass
+        if len(box_rep) != 1 or not self.is_pos_in_board(pos):
+            return False
+
+        self.board_state = f'{self.board_state[0:pos]}{box_rep}{self.board_state[pos+1:]}'
+        return True

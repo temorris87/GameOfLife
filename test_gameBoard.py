@@ -149,22 +149,32 @@ class TestGameBoard(TestCase):
         self.assertTrue(success, "Updating board failed.")
         self.assertEqual(updated_board, "***-*+**", "Incorrect board update.")
 
+        success = self.board.update_board('+', 0)
+        updated_board = self.board.board_state
+        self.assertTrue(success, "Updating board failed.")
+        self.assertEqual(updated_board, "+**-*+**", "Incorrect board update.")
+
+        success = self.board.update_board('d', 7)
+        updated_board = self.board.board_state
+        self.assertTrue(success, "Updating board failed.")
+        self.assertEqual(updated_board, "+**-*+*d", "Incorrect board update.")
+
         success = self.board.update_board('-', -1)
         updated_board = self.board.board_state
         self.assertFalse(success, "Updating board failed.")
-        self.assertEqual(updated_board, "***-*+**", "Incorrect board update.")
+        self.assertEqual(updated_board, "+**-*+*d", "Incorrect board update.")
 
         success = self.board.update_board('-', 8)
         updated_board = self.board.board_state
         self.assertFalse(success, "Updating board failed.")
-        self.assertEqual(updated_board, "***-*+**", "Incorrect board update.")
+        self.assertEqual(updated_board, "+**-*+*d", "Incorrect board update.")
 
         success = self.board.update_board('--', 2)
         updated_board = self.board.board_state
         self.assertFalse(success, "Updating board failed.")
-        self.assertEqual(updated_board, "***-*+**", "Incorrect board update.")
+        self.assertEqual(updated_board, "+**-*+*d", "Incorrect board update.")
 
         success = self.board.update_board('', 2)
         updated_board = self.board.board_state
         self.assertFalse(success, "Updating board failed.")
-        self.assertEqual(updated_board, "***-*+**", "Incorrect board update.")
+        self.assertEqual(updated_board, "+**-*+*d", "Incorrect board update.")
