@@ -178,3 +178,9 @@ class TestGameBoard(TestCase):
         updated_board = self.board.board_state
         self.assertFalse(success, "Updating board failed.")
         self.assertEqual(updated_board, "+**-*+*d", "Incorrect board update.")
+
+    def test_get_all_neighbors(self):
+        neighbors = self.board.get_all_neighbors(5)
+        self.assertEqual(neighbors, [0, 1, 2, 4, 6, -1, -1, -1], "incorrect neighbor numbers")
+        neighbors = self.board.get_all_neighbors(7)
+        self.assertEqual(neighbors, [2, 3, -1, 6, -1, -1, -1, -1], "incorrect neighbor numbers")

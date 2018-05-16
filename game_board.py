@@ -30,6 +30,7 @@ class GameBoard(object):
         self.board_height = board_height
         self.num_positions = board_width * board_height
 
+
     def get_coord_from_pos(self, pos):
         """
         Given a board position number, return the x and y coordinates for the
@@ -182,3 +183,15 @@ class GameBoard(object):
 
         self.board_state = f'{self.board_state[0:pos]}{box_rep}{self.board_state[pos+1:]}'
         return True
+
+    def get_all_neighbors(self,pos):
+        positions = []
+        positions.append(self.get_location_up_left(pos))
+        positions.append(self.get_location_up(pos))
+        positions.append(self.get_location_up_right(pos))
+        positions.append(self.get_location_left(pos))
+        positions.append(self.get_location_right(pos))
+        positions.append(self.get_location_down_left(pos))
+        positions.append(self.get_location_down(pos))
+        positions.append(self.get_location_down_right(pos))
+        return positions

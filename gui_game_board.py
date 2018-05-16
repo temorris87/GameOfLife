@@ -1,4 +1,5 @@
 import game_board
+import pygame
 
 
 class GUIGameBoard(game_board.GameBoard):
@@ -14,30 +15,37 @@ class GUIGameBoard(game_board.GameBoard):
                  screen,
                  box_drawing_map,
                  init_board_state,
-                 board_width=400,
-                 board_height=300,
-                 box_width=50,
-                 background_color=(0, 0, 0)):
+                 board_width=8,
+                 board_height=6,
+                 box_width=50):
+        super(GUIGameBoard, self).__init__(init_board_state, board_width, board_height)
         self.screen = screen
+        #: :type: dictionary
         self.box_drawing_map = box_drawing_map
-        super.init_board_state = init_board_state
-        super.board_width = board_width            # Not true, needs to be converted to non pixel value
-        super.board_height = board_height          # Not true, needs to be converted to non pixel value
         self.box_width = box_width
-        self.background_color = background_color
 
     def update_screen(self):
-        pass
+        """
+        the method used whenever to update the screen that holds the game_board
+        :return: void
+        """
+        for i, box in enumerate(self.board_state):
+            (x, y) = self.get_pixel_coord_from_pos(i)
 
-    def draw_game_board(self, boxes, screen):
-        pass
-#        for i in boxes:
-#            row = i % BOXES_IN_ROW
-#            col = i // BOXES_IN_ROW
-#            pygame.draw.rect(screen, BOX_COLOR, [row * BOX_WIDTH,
-#                                                 col * BOX_WIDTH,
-#                                                 BOX_WIDTH,
-#                                                 BOX_WIDTH])
+            color = self.box_drawing_map[box]
+            pygame.draw.rect(self.screen, color, [x,
+                                                  y,
+                                                  self.box_width,
+                                                  self.box_width])
 
-#    def get_background_color(self):
-#       return self.background_color
+    def get_pixel_coord_from_pos(self, pos):
+        """
+        Given a board position number, return the pixel coordinates for the
+        given position.
+        :param pos: Position on the board.
+        :return: Success: [x_pixel, y_pixel] Failure: [-1, -1]
+        """
+        (x, y) = self.get_coord_from_pos(pos)
+        if x == -1 and y == -1:
+            return [-1, -1]
+        return [x * self.box_width, y * self.box_width]

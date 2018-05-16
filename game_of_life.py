@@ -2,28 +2,22 @@ import gui_game_board
 import pygame
 
 BOARD_WIDTH = 500
-BOARD_HEIGHT = 400
-BOX_WIDTH = 10
+BOARD_HEIGHT = 500
 
-BACKGROUND_COLOR = (0, 0, 0)
-BOX_COLOR = (255, 255, 255)
+LIFE_CHAR = '-'
+DEAD_CHAR = "*"
 
 class GameOfLife(object):
-    def __init__(self, gboard):
+    def __init__(self):
+        pygame.init()
+        size = [BOARD_WIDTH, BOARD_HEIGHT]
+        screen = pygame.display.set_mode(size)
+        pygame.display.set_caption("Game of Life")
+        test_map = {'*': (255, 255, 255), '-': (0, 0, 0)}
         #: :type: gui_game_board.GUIGameBoard
-        self.gboard = gboard #gui_game_board(gboard)
+        self.gboard = gui_game_board.GUIGameBoard(screen, test_map, "-******-", board_width=4, board_height=2, box_width=BOARD_WIDTH//4)
 
-    def draw_game_board(self):
-        boxes = self.gboard
-        for i in boxes:
-            row = i % BOXES_IN_ROW
-            col = i // BOXES_IN_ROW
-            pygame.draw.rect(screen, BOX_COLOR, [row * BOX_WIDTH,
-                                                 col * BOX_WIDTH,
-                                                 BOX_WIDTH,
-                                                 BOX_WIDTH])
-
-    def animation(self,screen):
+    def animation(self):
         done = False
         clock = pygame.time.Clock()
 
@@ -34,41 +28,31 @@ class GameOfLife(object):
                 if event.type == pygame.QUIT:
                     done = True
 
-            screen.fill(BACKGROUND_COLOR)
-            draw_game_board()
+            self.gboard.screen.fill(self.gboard.box_drawing_map['*'])
+            self.gboard.update_screen()
             pygame.display.flip()
 
-
     def run(self):
-        pygame.init()
-        size = [BOARD_WIDTH, BOARD_HEIGHT]
-        screen = pygame.display.set_mode(size)
-        pygame.display.set_caption("Game of Life")
-
-        self.gboard = gui_game_board.GUIGameBoard()
-        animation(screen)
+        self.animation()
         pygame.quit()
 
 
+    def game_iteration(self):
+        pass
 
+    def count_nbr(self, pos):
+        counter = 0
+        positions = self.gboard.get_all_neighbors(pos)
 
-'''
-    def __init__(self,
-                 screen,
-                 box_drawing_map,
-                 init_board_state,
-                 board_width=400,
-                 board_height=300,
-                 box_width=50,
-                 background_color=(0, 0, 0)):
-        self.screen = screen
-        self.box_drawing_map = box_drawing_map
-        super.init_board_state = init_board_state
-        super.board_width = board_width            # Not true, needs to be converted to non pixel value
-        super.board_height = board_height          # Not true, needs to be converted to non pixel value
-        self.box_width = box_width
-        self.background_color = background_color
-'''
+        for p in positions:
+
+            if p == -1:
+                continue
+
+            if self.gboard.board_state[p] == LIFE_CHAR:
+                counter += 1
+        return counter
+
 if __name__ == "__main__":
-    game = GameOfLife(gui_game_board.GUIGameBoard)
+    game = GameOfLife()
     game.run()
