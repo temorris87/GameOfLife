@@ -15,7 +15,7 @@ class GameOfLife(object):
         pygame.display.set_caption("Game of Life")
         test_map = {'*': (255, 255, 255), '-': (0, 0, 0)}
         #: :type: gui_game_board.GUIGameBoard
-        self.gboard = gui_game_board.GUIGameBoard(screen, test_map, "-******-", board_width=4, board_height=2, box_width=BOARD_WIDTH//4)
+        self.gboard = gui_game_board.GUIGameBoard(screen, test_map, "--**-*-**-******", board_width=4, board_height=4, box_width=BOARD_WIDTH//4)
 
     def animation(self):
         done = False
@@ -29,6 +29,7 @@ class GameOfLife(object):
                     done = True
 
             self.gboard.screen.fill(self.gboard.box_drawing_map['*'])
+            self.game_iteration()
             self.gboard.update_screen()
             pygame.display.flip()
 
@@ -36,9 +37,23 @@ class GameOfLife(object):
         self.animation()
         pygame.quit()
 
-
     def game_iteration(self):
-        pass
+        temp = []
+        for i, cell in enumerate(self.gboard.board_state):
+            nbrs = self.count_nbr(i)
+            if cell == LIFE_CHAR:
+                if nbrs < 2 or nbrs > 3:
+                    temp.append(DEAD_CHAR)
+                else:
+                    temp.append(LIFE_CHAR)
+            else:
+                if nbrs == 3:
+                    temp.append(LIFE_CHAR)
+                else:
+                    temp.append(DEAD_CHAR)
+            print(nbrs)
+        self.gboard.board_state = "".join(temp)
+
 
     def count_nbr(self, pos):
         counter = 0
