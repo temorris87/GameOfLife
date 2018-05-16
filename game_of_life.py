@@ -10,6 +10,7 @@ BOX_COLOR = (255, 255, 255)
 
 class GameOfLife(object):
     def __init__(self, gboard):
+        #: :type: gui_game_board.GUIGameBoard
         self.gboard = gboard #gui_game_board(gboard)
 
     def draw_game_board(self):
