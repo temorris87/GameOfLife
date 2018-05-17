@@ -15,11 +15,10 @@ class GameOfLife(object):
         size = [BOARD_WIDTH, BOARD_HEIGHT]
         screen = pygame.display.set_mode(size)
         pygame.display.set_caption("Game of Life")
-        test_map = {'*': ["color", (0, 0, 0), None],
-                    '-': ["img", os.path.join("img", "life.png"), None]}
+        test_map_path = "themes/default.cfg"
         #: :type: gui_game_board.GUIGameBoard
         self.gboard = gui_game_board.GUIGameBoard(screen,
-                                                  test_map,
+                                                  test_map_path,
                                                   "****---*********",
                                                   board_width=4,
                                                   board_height=4,

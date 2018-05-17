@@ -13,7 +13,7 @@ class GUIGameBoard(game_board.GameBoard):
 
     def __init__(self,
                  screen,
-                 box_drawing_map,
+                 box_drawing_map_path,
                  init_board_state,
                  board_width=8,
                  board_height=6,
@@ -21,9 +21,26 @@ class GUIGameBoard(game_board.GameBoard):
         super(GUIGameBoard, self).__init__(init_board_state, board_width, board_height)
         self.screen = screen
         #: :type: dictionary
-        self.box_drawing_map = box_drawing_map
+        self.box_drawing_map = None
+        self.read_drawing_map(box_drawing_map_path)
         self.box_width = box_width
         self.initialize_images()
+
+    def read_drawing_map(self, box_drawing_map_path):
+
+        # {'*': ["color", (0, 0, 0), None]}
+        # {'-': ["img", os.path.join("img", "life.png"), None]}
+        fd = open(box_drawing_map_path, 'r')
+        lines = [line.strip() for line in fd.readlines()]
+        fd.close()
+
+        box_drawing_map = {}
+        for line in lines:
+            words = line.split()
+            map_entry = {words[0]: [words[1], words[2], None]}
+            box_drawing_map.update(map_entry)
+
+        self.box_drawing_map = box_drawing_map
 
     def update_screen(self):
         """
@@ -33,6 +50,7 @@ class GUIGameBoard(game_board.GameBoard):
         for i, box in enumerate(self.board_state):
             (x, y) = self.get_pixel_coord_from_pos(i)
 
+            print(self.box_drawing_map[box][1])
             if self.box_drawing_map[box][0] == "color":
                 pygame.draw.rect(self.screen,
                                  self.box_drawing_map[box][1],

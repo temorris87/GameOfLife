@@ -6,6 +6,9 @@ import os
 class TestGameBoard(TestCase):
     def setUp(self):
         self.board = game_board.GameBoard("********", 4, 2)
+
+    @staticmethod
+    def setUpModule(self):
         fp = open("map.txt", "w")
         fp.writelines(["* color (0, 0, 0)    None\n",
                        "- img   img/life.png None\n"])
@@ -21,10 +24,10 @@ class TestGameBoard(TestCase):
                        "****\n"])
         fp.close()
 
-    def tearDown(self):
+    @staticmethod
+    def tearDownModule(self):
         os.remove("map.txt")
         os.remove("board.txt")
-
 
     def test_get_coord_from_pos(self):
         [x, y] = self.board.get_coord_from_pos(0)
