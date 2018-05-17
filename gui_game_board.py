@@ -23,6 +23,7 @@ class GUIGameBoard(game_board.GameBoard):
         #: :type: dictionary
         self.box_drawing_map = box_drawing_map
         self.box_width = box_width
+        self.initialize_images()
 
     def update_screen(self):
         """
@@ -32,11 +33,15 @@ class GUIGameBoard(game_board.GameBoard):
         for i, box in enumerate(self.board_state):
             (x, y) = self.get_pixel_coord_from_pos(i)
 
-            color = self.box_drawing_map[box]
-            pygame.draw.rect(self.screen, color, [x,
-                                                  y,
-                                                  self.box_width,
-                                                  self.box_width])
+            if self.box_drawing_map[box][0] == "color":
+                pygame.draw.rect(self.screen,
+                                 self.box_drawing_map[box][1],
+                                 [x,
+                                  y,
+                                  self.box_width,
+                                  self.box_width])
+            else:
+                self.screen.blit(self.box_drawing_map[box][2], (x, y))
 
     def get_pixel_coord_from_pos(self, pos):
         """
@@ -49,3 +54,10 @@ class GUIGameBoard(game_board.GameBoard):
         if x == -1 and y == -1:
             return [-1, -1]
         return [x * self.box_width, y * self.box_width]
+
+    def initialize_images(self):
+        for entry in self.box_drawing_map.items():
+            if entry[1][0] == "img":
+                img_path = entry[1][1]
+                entry[1][2] = pygame.image.load(img_path).convert()
+

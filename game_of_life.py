@@ -1,4 +1,5 @@
 import gui_game_board
+import os
 import pygame
 
 BOARD_WIDTH = 500
@@ -14,7 +15,8 @@ class GameOfLife(object):
         size = [BOARD_WIDTH, BOARD_HEIGHT]
         screen = pygame.display.set_mode(size)
         pygame.display.set_caption("Game of Life")
-        test_map = {'*': (255, 255, 255), '-': (0, 0, 0)}
+        test_map = {'*': ["color", (0, 0, 0), None],
+                    '-': ["img", os.path.join("img", "life.png"), None]}
         #: :type: gui_game_board.GUIGameBoard
         self.gboard = gui_game_board.GUIGameBoard(screen,
                                                   test_map,
@@ -34,7 +36,7 @@ class GameOfLife(object):
                 if event.type == pygame.QUIT:
                     done = True
 
-            self.gboard.screen.fill(self.gboard.box_drawing_map['*'])
+#            self.gboard.screen.fill(self.gboard.box_drawing_map['*'])
             self.game_iteration()
             self.gboard.update_screen()
             pygame.display.flip()
