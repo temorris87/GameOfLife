@@ -5,15 +5,10 @@ import os
 
 class TestGameBoard(TestCase):
     def setUp(self):
-        self.board = game_board.GameBoard("********", 4, 2)
+        self.board = game_board.GameBoard("../boards/test.brd")
 
     @staticmethod
     def setUpModule(self):
-        fp = open("map.txt", "w")
-        fp.writelines(["* color (0, 0, 0)    None\n",
-                       "- img   img/life.png None\n"])
-        fp.close()
-
         fp = open("board.txt", "w")
         fp.writelines(["4\n",
                        "4\n",

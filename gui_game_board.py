@@ -14,16 +14,13 @@ class GUIGameBoard(game_board.GameBoard):
     def __init__(self,
                  screen,
                  box_drawing_map_path,
-                 init_board_state,
-                 board_width=8,
-                 board_height=6,
-                 box_width=50):
-        super(GUIGameBoard, self).__init__(init_board_state, board_width, board_height)
+                 board_loc):
+        super(GUIGameBoard, self).__init__(board_loc)
         self.screen = screen
         #: :type: dictionary
         self.box_drawing_map = None
+        self.box_width = 0
         self.read_drawing_map(box_drawing_map_path)
-        self.box_width = box_width
         self.initialize_images()
 
     def read_drawing_map(self, box_drawing_map_path):
@@ -33,7 +30,8 @@ class GUIGameBoard(game_board.GameBoard):
         fd.close()
 
         box_drawing_map = {}
-        for line in lines:
+        self.box_width = int(lines[0])
+        for line in lines[1:]:
             words = line.split()
             if words[1] == "color":
                 color = (int(words[2]), int(words[3]), int(words[4]))

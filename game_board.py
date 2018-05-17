@@ -21,14 +21,13 @@ class GameBoard(object):
     in the game board. Example for the above could be "**********".
     """
 
-    def __init__(self,
-                 init_board_state,
-                 board_width=20,
-                 board_height=10):
-        self.board_state = init_board_state
-        self.board_width = board_width
-        self.board_height = board_height
-        self.num_positions = board_width * board_height
+    def __init__(self, board_loc):
+        self.board_loc = board_loc
+        self.board_state = ""
+        self.board_width = 0
+        self.board_height = 0
+        self.num_positions = 0
+        self.read_game_board()
 
     def get_coord_from_pos(self, pos):
         """
@@ -206,3 +205,14 @@ class GameBoard(object):
                      self.get_location_down(pos),
                      self.get_location_down_right(pos)]
         return positions
+
+    def read_game_board(self):
+        fd = open(self.board_loc)
+        lines = [line.strip() for line in fd.readlines()]
+        fd.close()
+
+        self.board_width = int(lines[0].split()[0])
+        self.board_height = int(lines[1].split()[0])
+        self.board_state = "".join(lines[2:])
+        self.num_positions = self.board_width * self.board_height
+

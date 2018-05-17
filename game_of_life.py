@@ -16,13 +16,11 @@ class GameOfLife(object):
         screen = pygame.display.set_mode(size)
         pygame.display.set_caption("Game of Life")
         test_map_path = "themes/default.cfg"
+        test_board_path = "boards/default.brd"
         #: :type: gui_game_board.GUIGameBoard
         self.gboard = gui_game_board.GUIGameBoard(screen,
                                                   test_map_path,
-                                                  "*****---********",
-                                                  board_width=4,
-                                                  board_height=4,
-                                                  box_width=BOARD_WIDTH // 4)
+                                                  test_board_path)
 
     def animation(self):
         done = False
