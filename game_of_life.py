@@ -2,8 +2,8 @@ import gui_game_board
 import os
 import pygame
 
-BOARD_WIDTH = 500
-BOARD_HEIGHT = 500
+BOARD_WIDTH = 45*4
+BOARD_HEIGHT = 45*4
 
 LIFE_CHAR = '-'
 DEAD_CHAR = "*"
@@ -19,7 +19,7 @@ class GameOfLife(object):
         #: :type: gui_game_board.GUIGameBoard
         self.gboard = gui_game_board.GUIGameBoard(screen,
                                                   test_map_path,
-                                                  "****---*********",
+                                                  "*****---********",
                                                   board_width=4,
                                                   board_height=4,
                                                   box_width=BOARD_WIDTH // 4)

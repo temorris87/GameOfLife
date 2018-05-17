@@ -28,8 +28,6 @@ class GUIGameBoard(game_board.GameBoard):
 
     def read_drawing_map(self, box_drawing_map_path):
 
-        # {'*': ["color", (0, 0, 0), None]}
-        # {'-': ["img", os.path.join("img", "life.png"), None]}
         fd = open(box_drawing_map_path, 'r')
         lines = [line.strip() for line in fd.readlines()]
         fd.close()
@@ -37,8 +35,11 @@ class GUIGameBoard(game_board.GameBoard):
         box_drawing_map = {}
         for line in lines:
             words = line.split()
-            map_entry = {words[0]: [words[1], words[2], None]}
-            box_drawing_map.update(map_entry)
+            if words[1] == "color":
+                color = (int(words[2]), int(words[3]), int(words[4]))
+                box_drawing_map.update({words[0]: [words[1], color, None]})
+            else:
+                box_drawing_map.update({words[0]: [words[1], words[2], None]})
 
         self.box_drawing_map = box_drawing_map
 
@@ -50,7 +51,6 @@ class GUIGameBoard(game_board.GameBoard):
         for i, box in enumerate(self.board_state):
             (x, y) = self.get_pixel_coord_from_pos(i)
 
-            print(self.box_drawing_map[box][1])
             if self.box_drawing_map[box][0] == "color":
                 pygame.draw.rect(self.screen,
                                  self.box_drawing_map[box][1],
