@@ -1,9 +1,8 @@
 import gui_game_board
-import os
 import pygame
 
-BOARD_WIDTH = 45*4
-BOARD_HEIGHT = 45*4
+BOARD_WIDTH = 1920
+BOARD_HEIGHT = 1080
 
 LIFE_CHAR = '-'
 DEAD_CHAR = "*"
@@ -13,7 +12,7 @@ class GameOfLife(object):
     def __init__(self):
         pygame.init()
         size = [BOARD_WIDTH, BOARD_HEIGHT]
-        screen = pygame.display.set_mode(size)
+        screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
         pygame.display.set_caption("Game of Life")
         test_map_path = "themes/default.cfg"
         test_board_path = "boards/default.brd"
@@ -30,7 +29,8 @@ class GameOfLife(object):
             clock.tick(10)
 
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == pygame.QUIT or \
+                        (event.type is pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                     done = True
 
 #            self.gboard.screen.fill(self.gboard.box_drawing_map['*'])

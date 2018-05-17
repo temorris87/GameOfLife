@@ -76,4 +76,3 @@ class GUIGameBoard(game_board.GameBoard):
             if entry[1][0] == "img":
                 img_path = entry[1][1]
                 entry[1][2] = pygame.image.load(img_path).convert()
-

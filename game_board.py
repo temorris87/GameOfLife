@@ -215,4 +215,3 @@ class GameBoard(object):
         self.board_height = int(lines[1].split()[0])
         self.board_state = "".join(lines[2:])
         self.num_positions = self.board_width * self.board_height
-
