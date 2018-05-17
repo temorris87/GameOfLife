@@ -1,10 +1,30 @@
 from unittest import TestCase
 import game_board
+import os
 
 
 class TestGameBoard(TestCase):
     def setUp(self):
         self.board = game_board.GameBoard("********", 4, 2)
+        fp = open("map.txt", "w")
+        fp.writelines(["* color (0, 0, 0)    None\n",
+                       "- img   img/life.png None\n"])
+        fp.close()
+
+        fp = open("board.txt", "w")
+        fp.writelines(["4\n",
+                       "4\n",
+                       "50\n",
+                       "*-**\n",
+                       "*-**\n",
+                       "*-**\n",
+                       "****\n"])
+        fp.close()
+
+    def tearDown(self):
+        os.remove("map.txt")
+        os.remove("board.txt")
+
 
     def test_get_coord_from_pos(self):
         [x, y] = self.board.get_coord_from_pos(0)
