@@ -91,7 +91,7 @@ class GameOfLife(object):
         clock = pygame.time.Clock()
 
         while not done:
-            clock.tick(10)
+            clock.tick(11)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or \
