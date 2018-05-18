@@ -47,7 +47,7 @@ class GameOfLife(object):
 
         random.seed()
 
-        for x in range(random.randint(0, 500)):
+        for x in range(random.randint(0, 50)):
             nh = height + random.randint(-4, 4)
             nw = width + random.randint(-4, 4)
 
@@ -56,7 +56,7 @@ class GameOfLife(object):
             elif nw >= 108:
                 continue
 
-            bit_vector[nh*nw] = 1
+            bit_vector[192 * nh + nw] = 1
 
         return bit_vector
 
