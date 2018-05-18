@@ -4,9 +4,20 @@ import random
 BOARD_WIDTH = 1920
 BOARD_HEIGHT = 1080
 
+
+BOX_SIDE = 10
+
+BOARD_WIDTH_OF_BOX = (BOARD_WIDTH // BOX_SIDE)
+BOARD_HEIGHT_OF_BOX = (BOARD_HEIGHT // BOX_SIDE)
+
+
 LIFE_CHAR = '-'
 DEAD_CHAR = "*"
 
+MIN_DOT_NUM = 25
+MAX_DOT_NUM = 500
+
+WINDOW_WIDTH = 8
 
 class GameOfLife(object):
     def __init__(self):
@@ -32,31 +43,31 @@ class GameOfLife(object):
 
     def bit_vector_init(self, width, height):
         bit_vector = []
-        for x in range(192*108):
+        for x in range( BOARD_WIDTH_OF_BOX * BOARD_HEIGHT_OF_BOX):
             bit_vector.append(0)
 
         if width <= 10:
             width += 10
-        elif width >= 192 - 10:
+        elif width >= BOARD_WIDTH_OF_BOX - 10:
             width -= 10
 
         if height <= 10:
             height += 10
-        elif height >= 108 - 10:
+        elif height >= BOARD_HEIGHT_OF_BOX - 10:
             height -= 10
 
         random.seed()
 
-        for x in range(random.randint(0, 500)):
-            nh = height + random.randint(-4, 4)
-            nw = width + random.randint(-4, 4)
+        for x in range(MIN_DOT_NUM, random.randint(0, MAX_DOT_NUM)):
+            nh = height + random.randint(0-WINDOW_WIDTH//2, WINDOW_WIDTH//2)
+            nw = width + random.randint(0-WINDOW_WIDTH//2, WINDOW_WIDTH//2)
 
-            if nh >= 192:
+            if nh >= BOARD_WIDTH_OF_BOX:
                 continue
-            elif nw >= 108:
+            elif nw >= BOARD_HEIGHT_OF_BOX:
                 continue
 
-            bit_vector[nh*nw] = 1
+            bit_vector[192 * nh + nw] = 1
 
         return bit_vector
 
